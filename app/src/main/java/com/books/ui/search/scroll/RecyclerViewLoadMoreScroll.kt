@@ -9,7 +9,6 @@ class RecyclerViewLoadMoreScroll(layoutManager: LinearLayoutManager) :
 
     private var visibleThreshold = 10
     private lateinit var mOnLoadMoreListener: OnLoadMoreListener
-    private lateinit var topToScrollListener: OnTopToScrollListener
     private var isLoading: Boolean = false
     private var lastVisibleItem: Int = 0
     private var firstVisibleItem: Int = 0
@@ -28,10 +27,6 @@ class RecyclerViewLoadMoreScroll(layoutManager: LinearLayoutManager) :
         this.mOnLoadMoreListener = mOnLoadMoreListener
     }
 
-    fun setOnVisibleTopToScrollButtonListener(topToScrollListener: OnTopToScrollListener) {
-        this.topToScrollListener = topToScrollListener
-    }
-
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
 
@@ -40,12 +35,7 @@ class RecyclerViewLoadMoreScroll(layoutManager: LinearLayoutManager) :
         lastVisibleItem =
             (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
-        if (dy <= 0) {
-            if (firstVisibleItem == 0) {
-                topToScrollListener.onInvisibleTopToScrollButton()
-            }
-        } else {
-            topToScrollListener.onVisibleTopToScrollButton()
+        if (dy > 0) {
             totalItemCount = mLayoutManager.itemCount
 
             if (!isLoading && totalItemCount <= lastVisibleItem + visibleThreshold) {
@@ -58,9 +48,4 @@ class RecyclerViewLoadMoreScroll(layoutManager: LinearLayoutManager) :
 
 interface OnLoadMoreListener {
     fun onLoadMore()
-}
-
-interface OnTopToScrollListener {
-    fun onVisibleTopToScrollButton()
-    fun onInvisibleTopToScrollButton()
 }

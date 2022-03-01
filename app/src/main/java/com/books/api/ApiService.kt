@@ -13,7 +13,7 @@ interface ApiService {
     ): Books
 
     @GET("books/{isbn13}")
-    suspend fun getDetailBook(
+    suspend fun getBookDetails(
         @Path("isbn13") isbn13: String
     ): Detail
 }

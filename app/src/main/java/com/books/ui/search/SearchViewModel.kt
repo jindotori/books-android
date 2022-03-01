@@ -24,6 +24,9 @@ class SearchViewModel @Inject constructor(
     private val _bookList: MutableLiveData<List<Book>> = MutableLiveData()
     val bookList: LiveData<List<Book>> = _bookList
 
+    private val _error: MutableLiveData<String> = MutableLiveData()
+    val error: LiveData<String> = _error
+
     fun init() {
         viewModelScope.launch {
             searchRepository.init()
@@ -34,11 +37,18 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    _bookList.postValue(searchRepository.searchBook(query))
+                    val books = searchRepository.searchBook(query)
+                    if (books.isNotEmpty()) {
+                        _bookList.postValue(books)
+                    } else {
+                        _error.postValue("bookList is empty")
+                    }
                 } catch (e: IllegalArgumentException) {
                     Log.e(TAG, "IllegalArgumentException: ${e.message}")
+                    _error.postValue("IllegalArgumentException: ${e.message}")
                 } catch (e: Exception) {
                     Log.e(TAG, "something wrong happened: ${e.message}")
+                    _error.postValue("something wrong happened: ${e.message}")
                 }
             }
         }

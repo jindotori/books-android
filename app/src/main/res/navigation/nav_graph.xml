@@ -39,6 +39,6 @@
         <argument
             android:name="isbn13"
             app:argType="string"
-            app:nullable="true" />
+            app:nullable="false" />
     </fragment>
 </navigation>

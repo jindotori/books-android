@@ -1,6 +1,6 @@
 package com.books.data.repo
 
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import com.books.api.ApiClient
 import javax.inject.Inject
 
@@ -11,9 +11,10 @@ class DetailRepository @Inject constructor(
         private const val TAG = "DetailBookRepository"
     }
 
-    var resultDetailBook = MutableLiveData<Detail>()
+    suspend fun getBookDetails(isbn13:String): Detail {
+        val detail = apiClient.getBookDetails(isbn13)
+        Log.d(TAG, "detail $detail")
 
-    suspend fun getDetailBook(isbn13:String): Detail {
-        return apiClient.getDetailBook(isbn13)
+        return detail
     }
 }

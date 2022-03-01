@@ -10,7 +10,7 @@ class ApiClient @Inject constructor(private val retrofit: ApiService) {
         return retrofit.searchBook(query, page)
     }
 
-    suspend fun getDetailBook(isbn13: String): Detail {
-        return retrofit.getDetailBook(isbn13)
+    suspend fun getBookDetails(isbn13: String): Detail {
+        return retrofit.getBookDetails(isbn13)
     }
 }

@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +13,6 @@ import com.books.data.repo.Book
 import com.books.databinding.FragmentSearchBinding
 import com.books.ui.base.BaseFragment
 import com.books.ui.search.scroll.OnLoadMoreListener
-import com.books.ui.search.scroll.OnTopToScrollListener
 import com.books.ui.search.scroll.RecyclerViewLoadMoreScroll
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,7 +28,8 @@ open class SearchFragment : BaseFragment() {
     private val searchViewModel: SearchViewModel by viewModels()
     private val bookListAdapter: BookListAdapter by lazy {
         BookListAdapter(
-            bookCardClicked = { bookCard -> bookCardClicked(bookCard) }
+            cardViewClicked = { cardView -> cardViewClicked(cardView)},
+            loadMoreButtonClicked = { loadMoreButtonClicked()}
         )
     }
 
@@ -89,33 +89,7 @@ open class SearchFragment : BaseFragment() {
             }
         })
 
-        scrollListener.setOnVisibleTopToScrollButtonListener(object : OnTopToScrollListener {
-            override fun onVisibleTopToScrollButton() {
-                visibleTopToScroll()
-            }
-
-            override fun onInvisibleTopToScrollButton() {
-                invisibleTopToScroll()
-            }
-        })
         binding.bookListRecyclerView.addOnScrollListener(scrollListener)
-
-
-        binding.scrollToTopButton.visibility = View.INVISIBLE
-        binding.scrollToTopButton.setOnClickListener {
-            binding.scrollToTopButton.visibility = View.INVISIBLE
-            binding.bookListRecyclerView.scrollToPosition(0)
-        }
-    }
-
-    private fun visibleTopToScroll() {
-        if (!binding.scrollToTopButton.isVisible)
-            binding.scrollToTopButton.visibility = View.VISIBLE
-    }
-
-    private fun invisibleTopToScroll() {
-        if (binding.scrollToTopButton.isVisible)
-            binding.scrollToTopButton.visibility = View.INVISIBLE
     }
 
     private fun subscribeSearchResult() {
@@ -123,17 +97,24 @@ open class SearchFragment : BaseFragment() {
             dismissProgressDialog()
             bookListAdapter.addBook(bookList, bookList.size)
             scrollListener.setLoaded()
-//            if (bookListAdapter.itemCount < 10) {
-//                searchViewModel.searchBook(binding.searchView.query.toString())
-//            }
+        }
+
+        searchViewModel.error.observe(viewLifecycleOwner) { error ->
+            dismissProgressDialog()
+            scrollListener.setLoaded()
+            Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun bookCardClicked(bookCard: Book) {
+    private fun cardViewClicked(cardView: Book) {
         findNavController().navigate(
             SearchFragmentDirections.actionSearchFragmentToDetailFragment(
-                bookCard.isbn13
+                cardView.isbn13
             )
         )
+    }
+
+    private fun loadMoreButtonClicked() {
+        searchViewModel.searchBook(binding.searchView.query.toString())
     }
 }
