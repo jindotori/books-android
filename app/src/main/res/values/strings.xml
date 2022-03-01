@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Books</string>
+    <string name="noti_exit">Press once more to close the app.</string>
+    <string name="search">Search</string>
+    <string name="type_book_title">Type book title</string>
+    <string name="image_description_book">book image</string>
+    <string name="operator_explanation">
+        Max keyword 2, function: ‘or(|)’ operator, ‘not(-)’ operator
+    </string>
+    <string name="img_arrow_upward">img_arrow_upward</string>
+    <string name="load_more">load more</string>
+</resources>
