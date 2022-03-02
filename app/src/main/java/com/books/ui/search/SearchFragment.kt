@@ -23,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 open class SearchFragment : BaseFragment() {
     companion object {
         private const val TAG = "SearchFragment"
-        private const val ITEMS_PER_PAGE = 10
     }
 
     private lateinit var binding: FragmentSearchBinding
@@ -33,7 +32,6 @@ open class SearchFragment : BaseFragment() {
     private val bookListAdapter: BookListAdapter by lazy {
         BookListAdapter(cardViewClicked = { cardViewClicked(it) })
     }
-    private var isFirst: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,7 +60,6 @@ open class SearchFragment : BaseFragment() {
     private fun setLayout() {
         setSearchView()
         setBookListView()
-        setLoadMoreButtonListener()
     }
 
     private fun setSearchView() {
@@ -71,9 +68,7 @@ open class SearchFragment : BaseFragment() {
                 bookListAdapter.clear()
                 scrollListener.setLoaded()
                 query?.let { bookTitle ->
-                    isFirst = true
                     showProgressDialog()
-                    binding.loadMoreBtn.visibility = View.INVISIBLE
                     searchViewModel.init()
                     searchViewModel.searchBook(bookTitle)
                 }
@@ -107,7 +102,6 @@ open class SearchFragment : BaseFragment() {
         Log.d(TAG, "subscribeSearchResult")
         searchViewModel.searchBookResult.observe(viewLifecycleOwner) { result ->
             binding.progressBar.visibility = View.INVISIBLE
-            binding.loadMoreBtn.visibility = View.INVISIBLE
             dismissProgressDialog()
 
             result?.let {
@@ -115,12 +109,6 @@ open class SearchFragment : BaseFragment() {
                     Status.SUCCESS -> {
                         result.data?.let { bookList ->
                             bookListAdapter.addBook(bookList, bookList.size)
-                            if (isFirst) {
-                                isFirst = false
-                                if (bookList.size < ITEMS_PER_PAGE) {
-                                    binding.loadMoreBtn.visibility = View.VISIBLE
-                                }
-                            }
                             scrollListener.setLoaded()
                         }
                     }
@@ -133,13 +121,6 @@ open class SearchFragment : BaseFragment() {
                     }
                 }
             }
-        }
-    }
-
-    private fun setLoadMoreButtonListener() {
-        binding.loadMoreBtn.setOnClickListener {
-            binding.loadMoreBtn.visibility = View.INVISIBLE
-            searchViewModel.searchBook(binding.searchView.query.toString())
         }
     }
 

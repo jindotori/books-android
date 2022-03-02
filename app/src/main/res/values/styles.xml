@@ -2,22 +2,49 @@
 <resources>
     <style name="TitleTextViewStyle">
         <item name="android:paddingBottom">@dimen/padding_bottom_2</item>
+        <item name="android:paddingTop">@dimen/padding_8</item>
+        <item name="android:textSize">@dimen/sp20</item>
+
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:paddingLeft">@dimen/padding</item>
+        <item name="android:paddingRight">@dimen/padding</item>
+    </style>
+    <style name="SubTitleTextViewStyle">
+        <item name="android:paddingBottom">@dimen/padding_bottom_2</item>
+        <item name="android:paddingTop">@dimen/padding_8</item>
+        <item name="android:textSize">@dimen/sp16</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:paddingLeft">@dimen/padding</item>
         <item name="android:paddingRight">@dimen/padding</item>
     </style>
 
-    <style name="PriceTextViewStyle">
+
+    <style name="SearchPriceTextViewStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/layout_margin_5</item>
         <item name="android:layout_marginBottom">@dimen/layout_margin_5</item>
         <item name="android:layout_marginLeft">@dimen/layout_margin</item>
         <item name="android:layout_marginRight">@dimen/layout_margin</item>
+        <item name="android:textSize">@dimen/sp14</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/royal_blue</item>
+    </style>
+
+    <style name="PriceTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">@dimen/padding_8</item>
+        <item name="android:layout_marginTop">@dimen/layout_margin_5</item>
+        <item name="android:layout_marginLeft">@dimen/layout_margin</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin</item>
+        <item name="android:textSize">@dimen/sp20</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/alive_orange</item>
     </style>
 
 
@@ -26,7 +53,7 @@
         <item name="android:layout_marginRight">@dimen/layout_margin</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">@dimen/sp30</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -35,7 +62,7 @@
         <item name="android:layout_marginRight">@dimen/layout_margin</item>
         <item name="android:layout_marginBottom">@dimen/layout_margin_5</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/sp18</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -44,7 +71,7 @@
         <item name="android:layout_marginRight">@dimen/layout_margin</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/sp14</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -53,7 +80,7 @@
         <item name="android:layout_marginRight">@dimen/layout_margin</item>
         <item name="android:layout_marginBottom">@dimen/layout_margin_5</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/sp18</item>
         <item name="android:textColor">@color/black</item>
     </style>
 </resources>
