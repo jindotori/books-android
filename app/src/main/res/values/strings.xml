@@ -10,4 +10,15 @@
     <string name="img_arrow_upward">img_arrow_upward</string>
     <string name="load_more">load more</string>
     <string name="cover_image">cover image</string>
+    <string name="title">Title</string>
+    <string name="subtitle">Subtitle</string>
+    <string name="authors">Authors</string>
+    <string name="isbn10">ISBN10</string>
+    <string name="isbn13">ISBN13</string>
+    <string name="pages">Pages</string>
+    <string name="year">Year</string>
+    <string name="rating">Rating</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
+    <string name="url">Url</string>
 </resources>

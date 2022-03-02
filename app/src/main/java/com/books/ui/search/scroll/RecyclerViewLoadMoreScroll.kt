@@ -1,11 +1,10 @@
 package com.books.ui.search.scroll
 
-import android.util.Log
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerViewLoadMoreScroll(layoutManager: LinearLayoutManager) :
-    RecyclerView.OnScrollListener() {
+class RecyclerViewLoadMoreScroll : RecyclerView.OnScrollListener {
 
     private var visibleThreshold = 10
     private lateinit var mOnLoadMoreListener: OnLoadMoreListener
@@ -13,7 +12,17 @@ class RecyclerViewLoadMoreScroll(layoutManager: LinearLayoutManager) :
     private var lastVisibleItem: Int = 0
     private var firstVisibleItem: Int = 0
     private var totalItemCount: Int = 0
-    private var mLayoutManager: RecyclerView.LayoutManager = layoutManager
+    private var mLayoutManager: RecyclerView.LayoutManager
+
+
+    constructor(layoutManager: LinearLayoutManager) {
+        this.mLayoutManager = layoutManager
+    }
+
+    constructor(layoutManager: GridLayoutManager) {
+        this.mLayoutManager = layoutManager
+        visibleThreshold *= layoutManager.spanCount
+    }
 
     fun setLoaded() {
         isLoading = false
@@ -30,11 +39,20 @@ class RecyclerViewLoadMoreScroll(layoutManager: LinearLayoutManager) :
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
 
-        firstVisibleItem =
-            (mLayoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-        lastVisibleItem =
-            (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-
+        when (mLayoutManager) {
+            is GridLayoutManager -> {
+                firstVisibleItem =
+                    (mLayoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+                lastVisibleItem =
+                    (mLayoutManager as GridLayoutManager).findLastVisibleItemPosition()
+            }
+            is LinearLayoutManager -> {
+                firstVisibleItem =
+                    (mLayoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                lastVisibleItem =
+                    (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+            }
+        }
         if (dy > 0) {
             totalItemCount = mLayoutManager.itemCount
 

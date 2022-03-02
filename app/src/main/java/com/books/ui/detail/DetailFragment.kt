@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.books.databinding.FragmentDetailBinding
@@ -19,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailFragment : BaseFragment() {
 
-    private lateinit var viewBinding: FragmentDetailBinding
+    private lateinit var binding: FragmentDetailBinding
 
     private val detailViewModel: DetailViewModel by viewModels()
 
@@ -30,29 +28,41 @@ class DetailFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewBinding = FragmentDetailBinding.inflate(inflater, container, false)
-        return viewBinding.root
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeBookDetails()
         showProgressDialog()
+        binding.clDetail.visibility = View.INVISIBLE
         detailViewModel.getDetailBook(args.isbn13)
     }
 
-
     private fun subscribeBookDetails() {
         detailViewModel.bookDetails.observe(viewLifecycleOwner) {bookDetails ->
-            viewBinding.ivCover
+            dismissProgressDialog()
+            binding.clDetail.visibility = View.VISIBLE
 
-            GlideApp.with(viewBinding.ivCover.context)
+            GlideApp.with(binding.ivCover.context)
                 .load(bookDetails.image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(14)))
-                .into(viewBinding.ivCover)
+                .into(binding.ivCover)
 
-            dismissProgressDialog()
+            binding.tvTitleBody.text = bookDetails.title
+            binding.tvSubTitleBody.text = bookDetails.subtitle
+            binding.tvAuthorsBody.text = bookDetails.authors
+            binding.tvIsbn10Body.text = bookDetails.isbn10
+            binding.tvIsbn13Body.text = bookDetails.isbn13
+            binding.tvPagesBody.text = bookDetails.pages
+            binding.tvYearBody.text = bookDetails.year
+            binding.ratingBar.rating = bookDetails.rating.toFloat()
+            binding.tvDescBody.text = bookDetails.desc
+            binding.tvPriceBody.text = bookDetails.price
+            binding.tvUrlBody.text = bookDetails.url
+
         }
     }
 }

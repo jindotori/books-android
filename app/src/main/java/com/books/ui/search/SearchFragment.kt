@@ -62,7 +62,7 @@ open class SearchFragment : BaseFragment() {
                 bookListAdapter.clear()
                 scrollListener.setLoaded()
                 query?.let { bookTitle ->
-                    showProgressDialog()
+//                    showProgressDialog()
                     searchViewModel.init()
                     searchViewModel.searchBook(bookTitle)
                 }
@@ -84,7 +84,7 @@ open class SearchFragment : BaseFragment() {
             RecyclerViewLoadMoreScroll(binding.bookListRecyclerView.layoutManager as LinearLayoutManager)
         scrollListener.setOnLoadMoreListener(object : OnLoadMoreListener {
             override fun onLoadMore() {
-                showProgressDialog()
+//                showProgressDialog()
                 searchViewModel.searchBook(binding.searchView.query.toString())
             }
         })
@@ -94,13 +94,11 @@ open class SearchFragment : BaseFragment() {
 
     private fun subscribeSearchResult() {
         searchViewModel.bookList.observe(viewLifecycleOwner) { bookList ->
-            dismissProgressDialog()
             bookListAdapter.addBook(bookList, bookList.size)
             scrollListener.setLoaded()
         }
 
         searchViewModel.error.observe(viewLifecycleOwner) { error ->
-            dismissProgressDialog()
             scrollListener.setLoaded()
             Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
         }
