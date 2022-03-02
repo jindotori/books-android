@@ -1,6 +1,5 @@
 package com.books.ui.detail.pdflist
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -30,10 +29,12 @@ class PdfListAdapter(
     }
 
     fun addPdf(pdf: HashMap<String, String>, size: Int) {
-        pdf.map { entry ->
-            pdfList.add(Pair(entry.key, entry.value))
+        pdf.map {
+            pdfList.add(Pair(it.key, it.value))
         }
-        pdfList.sortBy { pdf -> pdf.first }
+        pdfList.sortBy {
+            it.first
+        }
         notifyItemRangeChanged(pdfList.size, size)
     }
 }

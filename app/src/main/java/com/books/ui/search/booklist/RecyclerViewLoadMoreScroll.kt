@@ -36,9 +36,9 @@ class RecyclerViewLoadMoreScroll(layoutManager: LinearLayoutManager) :
         if (dy > 0) {
             Log.d(TAG, "itemCount: ${mLayoutManager.itemCount}")
             Log.d(TAG, "lastVisibleItem: $lastVisibleItem")
-            totalItemCount = mLayoutManager.itemCount - 1
+            totalItemCount = mLayoutManager.itemCount
 
-            if (!isLoading && totalItemCount <= lastVisibleItem) {
+            if (!isLoading && totalItemCount <= lastVisibleItem + 1) {
                 mOnLoadMoreListener.onLoadMore()
                 isLoading = true
             }

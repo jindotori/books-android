@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.books.repo.SimpleResult
+import com.books.repo.Status
 import com.books.repo.search.Book
 import com.books.repo.search.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,11 +23,8 @@ class SearchViewModel @Inject constructor(
         private const val TAG = "SearchViewModel"
     }
 
-    private val _bookList: MutableLiveData<List<Book>> = MutableLiveData()
-    val bookList: LiveData<List<Book>> = _bookList
-
-    private val _error: MutableLiveData<String> = MutableLiveData()
-    val error: LiveData<String> = _error
+    private val _searchBookResult: MutableLiveData<SimpleResult<List<Book>>> = MutableLiveData()
+    val searchBookResult: LiveData<SimpleResult<List<Book>>> = _searchBookResult
 
     fun init() {
         viewModelScope.launch {
@@ -40,25 +39,34 @@ class SearchViewModel @Inject constructor(
                     val books = searchRepository.searchBook(query)
                     if (books.isNotEmpty()) {
                         Log.d(TAG, "searchBook called")
-                        _bookList.postValue(books)
+                        _searchBookResult.postValue(SimpleResult(Status.SUCCESS, books))
                     } else {
-                        _error.postValue("bookList is empty")
+                        _searchBookResult.postValue(SimpleResult(Status.ERROR, "bookList is empty"))
                     }
                 } catch (e: IllegalArgumentException) {
                     Log.e(TAG, "IllegalArgumentException: ${e.message}")
-                    _error.postValue("IllegalArgumentException: ${e.message}")
+                    _searchBookResult.postValue(
+                        SimpleResult(
+                            Status.ERROR,
+                            "IllegalArgumentException: ${e.message}"
+                        )
+                    )
                 } catch (e: Exception) {
                     Log.e(TAG, "something wrong happened: ${e.message}")
-                    _error.postValue("something wrong happened: ${e.message}")
+                    _searchBookResult.postValue(
+                        SimpleResult(
+                            Status.ERROR,
+                            "something wrong happened: ${e.message}"
+                        )
+                    )
                 }
             }
         }
     }
 
-    fun resetViewModelData() {
+    fun clear() {
         viewModelScope.launch {
-            _bookList.postValue(null)
-            _error.postValue(null)
+            _searchBookResult.postValue(null)
         }
     }
 }

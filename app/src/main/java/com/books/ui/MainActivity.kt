@@ -1,13 +1,10 @@
 package com.books.ui
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.books.R
 import com.books.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint

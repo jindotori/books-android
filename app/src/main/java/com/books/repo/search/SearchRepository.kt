@@ -11,14 +11,14 @@ class SearchRepository @Inject constructor(
 ) {
     companion object {
         private const val TAG = "SearchRepository"
-        private const val ITEM_COUNT_PER_PAGE = 10
+        private const val ITEMS_PER_PAGE = 10
     }
 
     private var total: Int = 0
     private var page: Int = 1
 
     private fun isFull() : Boolean{
-        return total <= ((page - 1) * ITEM_COUNT_PER_PAGE)
+        return total <= ((page - 1) * ITEMS_PER_PAGE)
     }
 
     suspend fun init() = withContext(Dispatchers.IO) {

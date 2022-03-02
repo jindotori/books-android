@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.books.databinding.FragmentSearchBinding
+import com.books.repo.Status
 import com.books.repo.search.Book
 import com.books.ui.base.BaseFragment
 import com.books.ui.search.booklist.BookListAdapter
@@ -22,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 open class SearchFragment : BaseFragment() {
     companion object {
         private const val TAG = "SearchFragment"
+        private const val ITEMS_PER_PAGE = 10
     }
 
     private lateinit var binding: FragmentSearchBinding
@@ -29,11 +31,9 @@ open class SearchFragment : BaseFragment() {
 
     private val searchViewModel: SearchViewModel by viewModels()
     private val bookListAdapter: BookListAdapter by lazy {
-        BookListAdapter(
-            cardViewClicked = { cardViewClicked(it) },
-            loadMoreButtonClicked = { loadMoreButtonClicked() }
-        )
+        BookListAdapter(cardViewClicked = { cardViewClicked(it) })
     }
+    private var isFirst: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +41,6 @@ open class SearchFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        Log.d(TAG, "onCreateView")
 
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
@@ -49,7 +48,6 @@ open class SearchFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated")
 
         setLayout()
         subscribeSearchResult()
@@ -57,12 +55,14 @@ open class SearchFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        searchViewModel.resetViewModelData()
+
+        searchViewModel.clear()
     }
 
     private fun setLayout() {
         setSearchView()
         setBookListView()
+        setLoadMoreButtonListener()
     }
 
     private fun setSearchView() {
@@ -71,7 +71,9 @@ open class SearchFragment : BaseFragment() {
                 bookListAdapter.clear()
                 scrollListener.setLoaded()
                 query?.let { bookTitle ->
+                    isFirst = true
                     showProgressDialog()
+                    binding.loadMoreBtn.visibility = View.INVISIBLE
                     searchViewModel.init()
                     searchViewModel.searchBook(bookTitle)
                 }
@@ -93,6 +95,7 @@ open class SearchFragment : BaseFragment() {
             RecyclerViewLoadMoreScroll(binding.searchBookListRecyclerView.layoutManager as LinearLayoutManager)
         scrollListener.setOnLoadMoreListener(object : OnLoadMoreListener {
             override fun onLoadMore() {
+                binding.progressBar.visibility = View.VISIBLE
                 searchViewModel.searchBook(binding.searchView.query.toString())
             }
         })
@@ -102,33 +105,47 @@ open class SearchFragment : BaseFragment() {
 
     private fun subscribeSearchResult() {
         Log.d(TAG, "subscribeSearchResult")
-        searchViewModel.bookList.observe(viewLifecycleOwner) { bookList ->
+        searchViewModel.searchBookResult.observe(viewLifecycleOwner) { result ->
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.loadMoreBtn.visibility = View.INVISIBLE
             dismissProgressDialog()
-            Log.d(TAG, "nononon")
-            bookList?.let {
-                bookListAdapter.addBook(bookList, bookList.size)
-                scrollListener.setLoaded()
+
+            result?.let {
+                when (result.status) {
+                    Status.SUCCESS -> {
+                        result.data?.let { bookList ->
+                            bookListAdapter.addBook(bookList, bookList.size)
+                            if (isFirst) {
+                                isFirst = false
+                                if (bookList.size < ITEMS_PER_PAGE) {
+                                    binding.loadMoreBtn.visibility = View.VISIBLE
+                                }
+                            }
+                            scrollListener.setLoaded()
+                        }
+                    }
+                    Status.ERROR,
+                    Status.FAIL -> {
+                        scrollListener.setLoaded()
+                        result.message.let { message ->
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
         }
+    }
 
-        searchViewModel.error.observe(viewLifecycleOwner) { error ->
-            dismissProgressDialog()
-            scrollListener.setLoaded()
-            error?.let {
-                Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
-            }
+    private fun setLoadMoreButtonListener() {
+        binding.loadMoreBtn.setOnClickListener {
+            binding.loadMoreBtn.visibility = View.INVISIBLE
+            searchViewModel.searchBook(binding.searchView.query.toString())
         }
     }
 
     private fun cardViewClicked(cardView: Book) {
         findNavController().navigate(
-            SearchFragmentDirections.actionSearchFragmentToDetailFragment(
-                cardView.isbn13
-            )
+            SearchFragmentDirections.actionSearchFragmentToDetailFragment(cardView.isbn13)
         )
-    }
-
-    private fun loadMoreButtonClicked() {
-        searchViewModel.searchBook(binding.searchView.query.toString())
     }
 }
