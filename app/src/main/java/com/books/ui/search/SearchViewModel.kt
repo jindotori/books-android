@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.books.data.repo.Book
-import com.books.data.repo.SearchRepository
+import com.books.repo.search.Book
+import com.books.repo.search.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,6 +39,7 @@ class SearchViewModel @Inject constructor(
                 try {
                     val books = searchRepository.searchBook(query)
                     if (books.isNotEmpty()) {
+                        Log.d(TAG, "searchBook called")
                         _bookList.postValue(books)
                     } else {
                         _error.postValue("bookList is empty")
@@ -51,6 +52,13 @@ class SearchViewModel @Inject constructor(
                     _error.postValue("something wrong happened: ${e.message}")
                 }
             }
+        }
+    }
+
+    fun resetViewModelData() {
+        viewModelScope.launch {
+            _bookList.postValue(null)
+            _error.postValue(null)
         }
     }
 }

@@ -11,6 +11,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/layout_margin_5</item>
+        <item name="android:layout_marginBottom">@dimen/layout_margin_5</item>
         <item name="android:layout_marginLeft">@dimen/layout_margin</item>
         <item name="android:layout_marginRight">@dimen/layout_margin</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -19,9 +20,29 @@
         <item name="android:textColor">@color/royal_blue</item>
     </style>
 
+
+    <style name="DetailTitleHeaderStyle" parent="android:Widget.TextView">
+        <item name="android:layout_marginLeft">@dimen/layout_margin</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="DetailSubTitleHeaderStyle" parent="android:Widget.TextView">
+        <item name="android:layout_marginLeft">@dimen/layout_margin</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin</item>
+        <item name="android:layout_marginBottom">@dimen/layout_margin_5</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="DetailHeaderStyle" parent="android:Widget.TextView">
         <item name="android:layout_marginLeft">@dimen/layout_margin</item>
         <item name="android:layout_marginRight">@dimen/layout_margin</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
@@ -31,6 +52,7 @@
         <item name="android:layout_marginLeft">@dimen/layout_margin</item>
         <item name="android:layout_marginRight">@dimen/layout_margin</item>
         <item name="android:layout_marginBottom">@dimen/layout_margin_5</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
     </style>

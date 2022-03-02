@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.books.data.repo.Book
-import com.books.data.repo.Detail
-import com.books.data.repo.DetailRepository
+import com.books.repo.detail.Detail
+import com.books.repo.detail.DetailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

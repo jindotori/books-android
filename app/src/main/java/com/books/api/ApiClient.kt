@@ -1,7 +1,7 @@
 package com.books.api
 
-import com.books.data.repo.Detail
-import com.books.data.repo.Books
+import com.books.repo.detail.Detail
+import com.books.repo.search.Books
 import javax.inject.Inject
 
 class ApiClient @Inject constructor(private val retrofit: ApiService) {

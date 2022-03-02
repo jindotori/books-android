@@ -2,7 +2,7 @@
     <string name="app_name">Books</string>
     <string name="noti_exit">Press once more to close the app.</string>
     <string name="search">Search</string>
-    <string name="type_book_title">Type book title</string>
+    <string name="search_query_hint">Search books by Title, Author or ISBN</string>
     <string name="image_description_book">book image</string>
     <string name="operator_explanation">
         Max keyword 2, function: ‘or(|)’ operator, ‘not(-)’ operator
@@ -16,9 +16,11 @@
     <string name="isbn10">ISBN10</string>
     <string name="isbn13">ISBN13</string>
     <string name="pages">Pages</string>
-    <string name="year">Year</string>
     <string name="rating">Rating</string>
     <string name="description">Description</string>
     <string name="price">Price</string>
     <string name="url">Url</string>
+    <string name="new_releases_books">New Releases Books</string>
+    <string name="pdf">Pdf</string>
+    <string name="published">published</string>
 </resources>

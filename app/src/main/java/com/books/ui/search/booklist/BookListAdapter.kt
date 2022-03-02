@@ -1,14 +1,14 @@
-package com.books.ui.search
+package com.books.ui.search.booklist
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.books.R
-import com.books.data.repo.Book
 import com.books.databinding.ItemBookBinding
 import com.books.databinding.ItemLoadMoreBinding
 import com.books.module.GlideApp
+import com.books.repo.search.Book
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions

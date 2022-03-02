@@ -1,4 +1,4 @@
-package com.books.data.repo
+package com.books.repo.search
 
 import com.google.gson.annotations.SerializedName
 

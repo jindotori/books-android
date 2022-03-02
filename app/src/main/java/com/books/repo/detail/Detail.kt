@@ -1,4 +1,4 @@
-package com.books.data.repo
+package com.books.repo.detail
 
 import com.google.gson.annotations.SerializedName
 
@@ -16,4 +16,5 @@ data class Detail(
     @SerializedName("price") val price: String,
     @SerializedName("image") val image: String,
     @SerializedName("url") val url: String,
+    @SerializedName("pdf") val pdf: HashMap<String, String>?
 )

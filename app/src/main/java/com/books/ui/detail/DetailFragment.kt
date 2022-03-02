@@ -1,14 +1,22 @@
 package com.books.ui.detail
 
 import android.os.Bundle
+import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.compose.runtime.key
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.books.databinding.FragmentDetailBinding
 import com.books.module.GlideApp
 import com.books.ui.base.BaseFragment
+import com.books.ui.detail.pdflist.PdfListAdapter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
@@ -17,11 +25,18 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailFragment : BaseFragment() {
 
+    companion object {
+        private const val TAG = "DetailFragment"
+    }
     private lateinit var binding: FragmentDetailBinding
 
     private val detailViewModel: DetailViewModel by viewModels()
 
     private val args by navArgs<DetailFragmentArgs>()
+
+    private val pdfListAdapter: PdfListAdapter by lazy {
+        PdfListAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +53,9 @@ class DetailFragment : BaseFragment() {
         showProgressDialog()
         binding.clDetail.visibility = View.INVISIBLE
         detailViewModel.getDetailBook(args.isbn13)
+
+        binding.rvPdfList.layoutManager = LinearLayoutManager(context)
+        binding.rvPdfList.adapter = pdfListAdapter
     }
 
     private fun subscribeBookDetails() {
@@ -61,8 +79,15 @@ class DetailFragment : BaseFragment() {
             binding.ratingBar.rating = bookDetails.rating.toFloat()
             binding.tvDescBody.text = bookDetails.desc
             binding.tvPriceBody.text = bookDetails.price
-            binding.tvUrlBody.text = bookDetails.url
 
+            binding.tvUrl.movementMethod = LinkMovementMethod.getInstance()
+            val linkedText = String.format("<a href=\"%s\">Go to IT book store for more information.</a> ", bookDetails.url)
+            binding.tvUrl.text = Html.fromHtml(linkedText, Html.FROM_HTML_MODE_COMPACT)
+
+            bookDetails.pdf?.let {pdf ->
+                binding.clFreeDownloads.visibility = View.VISIBLE
+                pdfListAdapter.addPdf(pdf, pdf.size)
+            }
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.books.api
 
 
-import com.books.data.repo.Detail
-import com.books.data.repo.Books
+import com.books.repo.detail.Detail
+import com.books.repo.search.Books
 import retrofit2.http.*
 
 interface ApiService {
