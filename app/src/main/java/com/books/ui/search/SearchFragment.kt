@@ -5,13 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.books.repo.Result
 import com.books.databinding.FragmentSearchBinding
-import com.books.repo.Status
 import com.books.repo.search.Book
 import com.books.ui.base.BaseFragment
 import com.books.ui.search.booklist.BookListAdapter
@@ -51,12 +50,6 @@ open class SearchFragment : BaseFragment() {
         subscribeSearchResult()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        searchViewModel.clear()
-    }
-
     private fun setLayout() {
         setSearchView()
         setBookListView()
@@ -67,10 +60,10 @@ open class SearchFragment : BaseFragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 bookListAdapter.clear()
                 scrollListener.setLoaded()
-                query?.let { bookTitle ->
+                query?.let {
                     showProgressDialog()
-                    searchViewModel.init()
-                    searchViewModel.searchBook(bookTitle)
+                    searchViewModel.init(it)
+                    searchViewModel.searchBook()
                 }
                 binding.searchView.clearFocus()
                 return true
@@ -91,7 +84,11 @@ open class SearchFragment : BaseFragment() {
         scrollListener.setOnLoadMoreListener(object : OnLoadMoreListener {
             override fun onLoadMore() {
                 binding.progressBar.visibility = View.VISIBLE
-                searchViewModel.searchBook(binding.searchView.query.toString())
+                searchViewModel.searchBook()
+            }
+
+            override fun onDragging() {
+                binding.searchView.clearFocus()
             }
         })
 
@@ -101,27 +98,26 @@ open class SearchFragment : BaseFragment() {
     private fun subscribeSearchResult() {
         Log.d(TAG, "subscribeSearchResult")
         searchViewModel.searchBookResult.observe(viewLifecycleOwner) { result ->
-            binding.progressBar.visibility = View.INVISIBLE
-            dismissProgressDialog()
-
-            result?.let {
-                when (result.status) {
-                    Status.SUCCESS -> {
-                        result.data?.let { bookList ->
-                            bookListAdapter.addBook(bookList, bookList.size)
-                            scrollListener.setLoaded()
-                        }
-                    }
-                    Status.ERROR,
-                    Status.FAIL -> {
-                        scrollListener.setLoaded()
-                        result.message.let { message ->
-                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                        }
-                    }
+            when (result) {
+                is Result.Success -> {
+                    bookListAdapter.addBook(result.data, result.data.size)
+                    val message: String = result.data.size.toString() + " data loaded."
+                    toast(message)
+                }
+                is Result.Error -> {
+                    val errorMessage: String = result.exception.message.toString()
+                    toast(errorMessage)
                 }
             }
+            binding.progressBar.visibility = View.INVISIBLE
+            dismissProgressDialog()
+            scrollListener.setLoaded()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchViewModel.clear()
     }
 
     private fun cardViewClicked(cardView: Book) {

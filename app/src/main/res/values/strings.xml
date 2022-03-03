@@ -4,9 +4,6 @@
     <string name="search">Search</string>
     <string name="search_query_hint">Search books by Title, Author or ISBN</string>
     <string name="image_description_book">book image</string>
-    <string name="operator_explanation">
-        Max keyword 2, function: ‘or(|)’ operator, ‘not(-)’ operator
-    </string>
     <string name="img_arrow_upward">img_arrow_upward</string>
     <string name="load_more">load more</string>
     <string name="cover_image">cover image</string>
@@ -24,4 +21,8 @@
     <string name="pdf">Pdf</string>
     <string name="published">published</string>
     <string name="arrow_downward">arrow_downward</string>
+    <string name="failed_load_data">데이터를 불러오지 못했습니다.</string>
+    <string name="pdf_key">%1$s: </string>
+    <string name="hyperlink_text">&lt;a href="%1$s">Go to IT book store for more information.&lt;/a></string>
+    <string name="detail_book">Detail Book</string>
 </resources>

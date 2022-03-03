@@ -13,7 +13,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Detail Book"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/detail_book"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp20"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,7 +40,7 @@
 
             <TextView
                 android:id="@+id/tvTitleBody"
-                style="@style/DetailTitleHeaderStyle"
+                style="@style/DetailTitleBodyStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -37,7 +48,7 @@
 
             <TextView
                 android:id="@+id/tvSubTitleBody"
-                style="@style/DetailSubTitleHeaderStyle"
+                style="@style/DetailSubTitleBodyStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -218,7 +229,8 @@
                 android:id="@+id/rvPdfList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:layout_marginEnd="@dimen/layout_margin"
                 android:layout_marginBottom="30dp"
                 android:overScrollMode="never"
                 app:layout_constraintTop_toBottomOf="@id/tvPdf"
@@ -232,7 +244,7 @@
                 style = "@style/DetailHeaderStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:paddingBottom="20dp"
                 android:gravity="end"
                 app:layout_constraintTop_toBottomOf="@id/clFreeDownloads"
                 app:layout_constraintEnd_toEndOf="parent"

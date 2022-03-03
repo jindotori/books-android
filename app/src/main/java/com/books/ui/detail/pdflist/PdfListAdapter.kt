@@ -7,7 +7,7 @@ import com.books.R
 import com.books.databinding.ItemPdfBinding
 
 class PdfListAdapter(
-    private val pdfList: ArrayList<Pair<String, String>> = ArrayList()
+    private val pdfList: ArrayList<Pair<String, String?>> = ArrayList()
 ) : RecyclerView.Adapter<PdfListAdapter.ViewHolder>() {
     class ViewHolder(val binding: ItemPdfBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -23,18 +23,13 @@ class PdfListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         pdfList[position].let { item ->
-            holder.binding.tvPdfKey.text = item.first + ": "
+            holder.binding.tvPdfKey.text = item.first
             holder.binding.tvPdfValue.text = item.second
         }
     }
 
-    fun addPdf(pdf: HashMap<String, String>, size: Int) {
-        pdf.map {
-            pdfList.add(Pair(it.key, it.value))
-        }
-        pdfList.sortBy {
-            it.first
-        }
+    fun addPdf(pdf: List<Pair<String, String?>>, size: Int) {
+        pdfList.addAll(pdf)
         notifyItemRangeChanged(pdfList.size, size)
     }
 }
