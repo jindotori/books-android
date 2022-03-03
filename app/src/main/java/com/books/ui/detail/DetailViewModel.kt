@@ -10,8 +10,6 @@ import com.books.repo.detail.DetailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import com.books.repo.Result
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,11 +25,9 @@ class DetailViewModel @Inject constructor(
     val bookDetailsResult: LiveData<Result<Detail>> = _bookDetailsResult
 
     fun getDetailBook(isbn13: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val result = detailRepository.getBookDetails(isbn13)
-            withContext(Dispatchers.Main) {
-                _bookDetailsResult.postValue(result)
-            }
+            _bookDetailsResult.postValue(result)
         }
     }
 }

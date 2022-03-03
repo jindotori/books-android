@@ -25,4 +25,5 @@
     <string name="pdf_key">%1$s: </string>
     <string name="hyperlink_text">&lt;a href="%1$s">Go to IT book store for more information.&lt;/a></string>
     <string name="detail_book">Detail Book</string>
+    <string name="publisher">Publisher</string>
 </resources>

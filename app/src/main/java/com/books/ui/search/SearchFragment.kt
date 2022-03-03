@@ -121,6 +121,7 @@ open class SearchFragment : BaseFragment() {
     }
 
     private fun cardViewClicked(cardView: Book) {
+        toast.cancel()
         findNavController().navigate(
             SearchFragmentDirections.actionSearchFragmentToDetailFragment(cardView.isbn13)
         )

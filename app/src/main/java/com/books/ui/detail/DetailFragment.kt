@@ -83,6 +83,7 @@ class DetailFragment : BaseFragment() {
         binding.tvTitleBody.text = detail.title
         binding.tvSubTitleBody.text = detail.subtitle
         binding.tvAuthorsBody.text = detail.authors
+        binding.tvPublisherBody.text = detail.publisher
         binding.tvIsbn10Body.text = detail.isbn10
         binding.tvIsbn13Body.text = detail.isbn13
         binding.tvPagesBody.text = detail.pages

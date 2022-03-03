@@ -121,6 +121,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvAuthorsHeader" />
 
+            <TextView
+                android:id="@+id/tvPublisherHeader"
+                style="@style/DetailHeaderStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/publisher"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAuthorsBody" />
+
+            <TextView
+                android:id="@+id/tvPublisherBody"
+                style="@style/DetailBodyStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPublisherHeader" />
+
 
             <TextView
                 android:id="@+id/tvYearHeader"
@@ -129,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/published"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvAuthorsBody" />
+                app:layout_constraintTop_toBottomOf="@id/tvPublisherBody" />
 
             <TextView
                 android:id="@+id/tvYearBody"

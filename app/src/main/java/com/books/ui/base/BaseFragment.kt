@@ -17,7 +17,7 @@ open class BaseFragment : Fragment() {
         }
     }
 
-    private val toast: Toast by lazy {
+    val toast: Toast by lazy {
         Toast.makeText(context, "", Toast.LENGTH_SHORT)
     }
 
