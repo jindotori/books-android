@@ -13,7 +13,7 @@ class SearchRepository @Inject constructor(
     }
 
     enum class Operator {
-        OR, NOT, NO_OP
+        OR, NOT, NO_OP, UNKNOWN
     }
 
     private var total: Int = 0
@@ -31,7 +31,8 @@ class SearchRepository @Inject constructor(
         operator = when {
             query.matches(Regex("\\w+\\|\\w+")) -> Operator.OR
             query.matches(Regex("\\w+-\\w+")) -> Operator.NOT
-            else -> Operator.NO_OP
+            query.matches(Regex("\\w+")) -> Operator.NO_OP
+            else -> Operator.UNKNOWN
         }
     }
 
@@ -69,7 +70,7 @@ class SearchRepository @Inject constructor(
                             }
                     }
                 }
-                else -> {
+                Operator.NO_OP -> {
                     val booksData = apiClient.searchBook(query, page)
                     total = booksData.total.toInt()
                     page = booksData.page.toInt()
@@ -79,6 +80,9 @@ class SearchRepository @Inject constructor(
                             bookList.add(book)
                         }
                     }
+                }
+                else -> {
+                    return Result.Error(IllegalArgumentException("Keyword is invalid."))
                 }
             }
             page++
