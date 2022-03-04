@@ -61,6 +61,7 @@ open class SearchFragment : BaseFragment() {
                 bookListAdapter.clear()
                 scrollListener.setLoaded()
                 query?.let {
+                    binding.tvSearchGuide.visibility = View.INVISIBLE
                     showProgressDialog()
                     searchViewModel.init(it)
                     searchViewModel.searchBook()

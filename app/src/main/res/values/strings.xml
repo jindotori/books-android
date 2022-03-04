@@ -26,4 +26,10 @@
     <string name="hyperlink_text">&lt;a href="%1$s">Go to IT book store for more information.&lt;/a></string>
     <string name="detail_book">Detail Book</string>
     <string name="publisher">Publisher</string>
+    <string name="search_guide">
+        Search books with Keyword consisting of english letters or numbers.
+        \n\nYou can also search with following operators.
+        \n\n1. OR operator : Keyword1|Keyword2 can search books with both keywords.
+        \n\n2. Not operator: Keyword1-Keyword2 can search books with Keyword1 in title and without Keyword2.
+    </string>
 </resources>
