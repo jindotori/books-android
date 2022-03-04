@@ -1,7 +1,7 @@
 # Book Search Android App
 
 ## Project Overview
-The goal is to create a Book search app which can search from [IT Book Store API](https://api.itbook.store/"itstoreapi)). This is a well-maintained API which returns information in a JSON format.
+The goal is to create a Book search app which can search from [IT Book Store API](https://api.itbook.store/"itstoreapi"). This is a well-maintained API which returns information in a JSON format.
 
 ## Libraries Used
 * Foundation
