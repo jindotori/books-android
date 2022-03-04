@@ -1,4 +1,4 @@
-# Books Android
+# Book Search Android App
 
 
 ## 1. Initial screen
