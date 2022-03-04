@@ -29,7 +29,7 @@
     <string name="search_guide">
         Search books with Keyword consisting of english letters or numbers.
         \n\nYou can also search with following operators.
-        \n\n1. OR operator : Keyword1|Keyword2 can search books with both keywords.
-        \n\n2. Not operator: Keyword1-Keyword2 can search books with Keyword1 in title and without Keyword2.
+        \n\n1. OR(|) operator(e.g. java|kotlin) searches books for each keyword are combined and displayed..
+        \n\n2. Not(-) operator(e.g. android-java) searches books with the preceding keyword in the title, but shows books that do not include the following keyword..
     </string>
 </resources>
