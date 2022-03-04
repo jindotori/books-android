@@ -2,10 +2,11 @@
 
 ## Libraries Used
 * Foundation - Components for core system capabilities, Kotlin extensions and support for multidex and automated testing.
-** AppCompat - Degrade gracefully on older versions of Android.
-Android KTX - Write more concise, idiomatic Kotlin code.
-Test - An Android testing framework for unit and runtime UI tests.
-Architecture - A collection of libraries that help you design robust, testable, and maintainable apps. Start with classes for managing your UI component lifecycle and handling data persistence.
+*   AppCompat - Degrade gracefully on older versions of Android.
+*   Android KTX - Write more concise, idiomatic Kotlin code.
+*   Test - An Android testing framework for unit and runtime UI tests.
+* Architecture - A collection of libraries that help you design robust, testable, and maintainable apps. Start with classes for managing your UI component
+* lifecycle and handling data persistence.
 Data Binding - Declaratively bind observable data to UI elements.
 Lifecycles - Create a UI that automatically responds to lifecycle events.
 LiveData - Build data objects that notify views when the underlying database changes.
