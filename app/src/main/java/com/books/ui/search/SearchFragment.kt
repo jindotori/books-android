@@ -14,7 +14,6 @@ import com.books.databinding.FragmentSearchBinding
 import com.books.repo.search.Book
 import com.books.ui.base.BaseFragment
 import com.books.ui.search.booklist.BookListAdapter
-import com.books.ui.search.booklist.OnLoadMoreListener
 import com.books.ui.search.booklist.RecyclerViewLoadMoreScroll
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -82,7 +81,8 @@ open class SearchFragment : BaseFragment() {
 
         scrollListener =
             RecyclerViewLoadMoreScroll(binding.searchBookListRecyclerView.layoutManager as LinearLayoutManager)
-        scrollListener.setOnLoadMoreListener(object : OnLoadMoreListener {
+        scrollListener.setOnLoadMoreListener(object :
+            RecyclerViewLoadMoreScroll.OnLoadMoreListener {
             override fun onLoadMore() {
                 binding.progressBar.visibility = View.VISIBLE
                 searchViewModel.searchBook()

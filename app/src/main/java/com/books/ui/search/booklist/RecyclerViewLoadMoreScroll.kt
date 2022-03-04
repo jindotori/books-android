@@ -10,6 +10,7 @@ class RecyclerViewLoadMoreScroll(layoutManager: LinearLayoutManager) :
     companion object {
         private const val TAG = "RecyclerViewLoadMoreScroll"
     }
+
     private lateinit var loadMoreListener: OnLoadMoreListener
     private var isLoading: Boolean = false
     private var lastVisibleItem: Int = 0
@@ -51,9 +52,9 @@ class RecyclerViewLoadMoreScroll(layoutManager: LinearLayoutManager) :
             }
         }
     }
-}
 
-interface OnLoadMoreListener {
-    fun onLoadMore()
-    fun onDragging()
+    interface OnLoadMoreListener {
+        fun onLoadMore()
+        fun onDragging()
+    }
 }
