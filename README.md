@@ -1,5 +1,8 @@
 # Book Search Android App
 
+## Project Overview
+The goal is to create a Book search app which can search from IT Book Store. This is a well-maintained API which returns information in a JSON format.
+
 ## Libraries Used
 * Foundation
   * AppCompat
