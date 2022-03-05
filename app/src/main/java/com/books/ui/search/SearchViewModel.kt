@@ -10,6 +10,7 @@ import com.books.repo.search.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import com.books.repo.Result
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,7 +31,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun searchBook() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val result = searchRepository.searchBook()
             _searchBookResult.postValue(result)
         }
