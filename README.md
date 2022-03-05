@@ -1,5 +1,8 @@
 # Books Android App
 
+![Platform](https://img.shields.io/badge/platform-android-orange.svg)
+![Languages](https://img.shields.io/badge/language-kotlin-orange)
+
 ## Project Overview
 The goal is to create a Books app which can search book information from [IT Book Store API](https://api.itbook.store/). This is a well-maintained API which returns information in a JSON format.
 
