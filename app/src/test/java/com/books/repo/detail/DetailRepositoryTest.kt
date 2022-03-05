@@ -1,9 +1,10 @@
-package com.books.ui.detail
+package com.books.repo.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.books.api.ApiClient
 import com.books.repo.Result
-import com.books.repo.detail.Detail
-import com.books.repo.detail.DetailRepository
+import com.books.repo.search.SearchRepository
+import com.books.ui.detail.DetailViewModel
 import com.books.utils.CoroutinesTestExtension
 import com.books.utils.InstantExecutorExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,7 +23,7 @@ import org.mockito.MockitoAnnotations
 
 @ExperimentalCoroutinesApi
 @ExtendWith(InstantExecutorExtension::class, CoroutinesTestExtension::class)
-internal class DetailViewModelTest {
+internal class DetailRepositoryTest {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
@@ -30,19 +31,18 @@ internal class DetailViewModelTest {
     @get:Rule
     var coroutineScope: CoroutinesTestExtension = CoroutinesTestExtension()
 
-    private lateinit var vm: DetailViewModel
-
     @Mock
-    private lateinit var repository: DetailRepository
+    private lateinit var apiClient: ApiClient
 
+    private lateinit var repository: DetailRepository
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        vm = DetailViewModel(repository)
+        repository = DetailRepository(apiClient)
     }
 
     @Test
-    fun getDetailBook()  = runTest {
+    fun getBookDetailsTest()  = runTest {
         val isbn13 = "9781617294136"
         val result = Result.Success(Detail(
             "0",
@@ -62,11 +62,10 @@ internal class DetailViewModelTest {
             null
         ))
 
-        Mockito.`when`(repository.getBookDetails(isbn13))
-            .thenReturn(result)
-        vm.getDetailBook(isbn13)
+        Mockito.`when`(apiClient.getBookDetails(isbn13))
+            .thenReturn(result.data)
 
         advanceUntilIdle()
-        assertEquals(result, vm.bookDetailsResult.value)
+        assertEquals(result, repository.getBookDetails(isbn13))
     }
 }

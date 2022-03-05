@@ -15,13 +15,6 @@ class DetailRepository @Inject constructor(
     suspend fun getBookDetails(isbn13: String): Result<Detail> {
         return try {
             val detail = apiClient.getBookDetails(isbn13)
-            Log.d(TAG, "detail $detail")
-
-            detail.pdf?.let { pdf ->
-                pdf.keys.let {
-                    Log.d(TAG, "key $it")
-                }
-            }
             Result.Success(detail)
         } catch (e: Exception) {
             Result.Error(e)
