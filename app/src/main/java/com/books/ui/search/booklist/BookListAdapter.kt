@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.books.R
 import com.books.databinding.ItemBookBinding
-import com.books.module.GlideApp
 import com.books.repo.search.Book
+import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
@@ -32,7 +32,7 @@ class BookListAdapter(
             holder.binding.tvSubTitle.text = book.subtitle
             holder.binding.tvPrice.text = book.price
 
-            GlideApp.with(holder.itemView.context)
+            Glide.with(holder.itemView.context)
                 .load(book.image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(14)))

@@ -12,7 +12,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.books.R
 import com.books.databinding.FragmentDetailBinding
-import com.books.module.GlideApp
 import com.books.repo.detail.Detail
 import com.books.ui.base.BaseFragment
 import com.books.ui.detail.pdflist.PdfListAdapter
@@ -20,6 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.books.repo.Result
+import com.bumptech.glide.Glide
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -74,7 +74,7 @@ class DetailFragment : BaseFragment() {
     }
 
     private fun setDataOnView(detail: Detail) {
-        GlideApp.with(binding.ivCover.context)
+        Glide.with(binding.ivCover.context)
             .load(detail.image)
             .transition(DrawableTransitionOptions.withCrossFade())
             .apply(RequestOptions.bitmapTransform(RoundedCorners(14)))

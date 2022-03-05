@@ -50,8 +50,15 @@ open class SearchFragment : BaseFragment() {
     }
 
     private fun setLayout() {
+        setGuideTextView()
         setSearchView()
         setBookListView()
+    }
+
+    private fun setGuideTextView() {
+        if (bookListAdapter.itemCount == 0) {
+            binding.tvSearchGuide.visibility = View.VISIBLE
+        }
     }
 
     private fun setSearchView() {
