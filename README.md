@@ -22,7 +22,8 @@ The goal is to create a Books app which can search book information from [IT Boo
   * Android KTX
   * Test
 * Architecture
-  * Data Binding
+  * ViewBinding
+  * DataBinding
   * Lifecycles
   * LiveData
   * Navigation
