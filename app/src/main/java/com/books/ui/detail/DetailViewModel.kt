@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import com.books.repo.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,7 +29,9 @@ class DetailViewModel @Inject constructor(
     fun getDetailBook(isbn13: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = detailRepository.getBookDetails(isbn13)
-            _bookDetailsResult.postValue(result)
+            withContext(Dispatchers.Main) {
+                _bookDetailsResult.postValue(result)
+            }
         }
     }
 }
