@@ -14,7 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 class BookListAdapter(
     private val bookList: ArrayList<Book> = ArrayList(),
     var cardViewClicked: (book: Book) -> Unit
-) : RecyclerView.Adapter<BookListAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class ViewHolder(val binding: ItemBookBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +26,8 @@ class BookListAdapter(
         return bookList.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        holder as ViewHolder
         bookList[position].let { book ->
             holder.binding.tvTitle.text = book.title
             holder.binding.tvSubTitle.text = book.subtitle

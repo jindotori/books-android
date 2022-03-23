@@ -13,7 +13,7 @@ class SearchRepository @Inject constructor(
     }
 
     enum class Operator {
-        OR, NOT, NO_OP, UNKNOWN
+        OR, NOT, AND, NO_OP, UNKNOWN
     }
 
     private var total: Int = 0
@@ -31,6 +31,7 @@ class SearchRepository @Inject constructor(
         operator = when {
             query.matches(Regex("\\w+\\|\\w+")) -> Operator.OR
             query.matches(Regex("\\w+-\\w+")) -> Operator.NOT
+            query.matches(Regex("\\w+&\\w+")) -> Operator.AND
             query.matches(Regex("\\w+")) -> Operator.NO_OP
             else -> Operator.UNKNOWN
         }
@@ -68,6 +69,37 @@ class SearchRepository @Inject constructor(
                             }.map { book ->
                                 bookList.add(book)
                             }
+                    }
+                }
+                Operator.AND -> {
+                    val firstKeyword = query.split("-")[0]
+                    val secondKeyword = query.split("-")[1]
+                    val firstBooksData = apiClient.searchBook(firstKeyword, page)
+                    total = firstBooksData.total.toInt()
+                    page = firstBooksData.page.toInt()
+
+                    if (isFull) {
+                        val secondBooksData = apiClient.searchBook(secondKeyword, page)
+                        total = secondBooksData.total.toInt()
+                        page = secondBooksData.page.toInt()
+
+                        if (!isFull) {
+                            secondBooksData.books.map { book ->
+                                bookList.add(book)
+                            }
+                        }
+                    } else {
+                        val secondBooksData = apiClient.searchBook(secondKeyword, page)
+                        total = secondBooksData.total.toInt()
+                        page = secondBooksData.page.toInt()
+
+                        firstBooksData.books.map { firstBook ->
+                            secondBooksData.books.filter { secondBook ->
+                                firstBook.title.contains(secondBook.title, ignoreCase = true)
+                            }.map { book ->
+                                bookList.add(book)
+                            }
+                        }
                     }
                 }
                 Operator.NO_OP -> {
